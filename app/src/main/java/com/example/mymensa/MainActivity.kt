@@ -11,7 +11,6 @@ import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mymensa.databinding.ActivityMainBinding
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.food_item.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -25,10 +24,19 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        //testFoodItem = FoodItem("Hallo", "Hallo2", false)
-        //testList = mutableListOf( testFoodItem)
+        testFoodItem = FoodItem("Hallo", "Hallo2", false)
+        testList = mutableListOf( testFoodItem, testFoodItem, testFoodItem)
+
+        foodItemAdapter = FoodItemAdapter(testList)
+        rvFoodItems.adapter = foodItemAdapter
+        rvFoodItems.layoutManager = LinearLayoutManager(this)
+
+
 
         super.onCreate(savedInstanceState)
+
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         val navView: BottomNavigationView = binding.navView
 
@@ -42,12 +50,5 @@ class MainActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
-        foodItemAdapter = FoodItemAdapter(mutableListOf())
-        rvFoodItems.adapter = foodItemAdapter
-        rvFoodItems.layoutManager = LinearLayoutManager(this)
-
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-
     }
 }
