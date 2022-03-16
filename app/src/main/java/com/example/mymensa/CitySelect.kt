@@ -2,17 +2,19 @@ package com.example.mymensa
 
 import androidx.appcompat.app.AppCompatActivity
 import android.annotation.SuppressLint
-import android.os.Build
+import android.content.Context
 import android.os.Bundle
 import android.os.Handler
-import android.view.MotionEvent
 import android.view.View
-import android.view.WindowInsets
-import android.webkit.JsPromptResult
-import android.widget.ArrayAdapter
-import android.widget.LinearLayout
-import android.widget.TextView
+import android.widget.*
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.stringPreferencesKey
+import androidx.datastore.preferences.preferencesDataStore
+import androidx.lifecycle.lifecycleScope
 import com.example.mymensa.databinding.ActivityCitySelectBinding
+import kotlinx.coroutines.launch
 import okhttp3.OkHttpClient
 import org.json.JSONArray
 import org.json.JSONTokener
@@ -27,7 +29,8 @@ class CitySelect : AppCompatActivity() {
     private lateinit var binding: ActivityCitySelectBinding
     private lateinit var fullscreenContent: TextView
     private lateinit var fullscreenContentControls: LinearLayout
-    private val hideHandler = Handler()
+    private var cityList: ArrayList<String> = ArrayList()
+    val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
 
     private var isFullscreen: Boolean = false
 
@@ -49,12 +52,19 @@ class CitySelect : AppCompatActivity() {
 
         isFullscreen = true
 
-        val testText = arrayOf("Leipzig", "Hamburg", "Berlin")
-        val arrayAdapter = ArrayAdapter(this, R.layout.dropdown_item, testText)
-        binding.autoCompleteTextView.setAdapter(arrayAdapter)
-
         getCanteens()
 
+        val arrayAdapter = ArrayAdapter(this, R.layout.dropdown_item, cityList)
+        binding.autoCompleteTextView.setAdapter(arrayAdapter)
+        binding.autoCompleteTextView.setOnItemClickListener { parent, _, position, _ ->
+            lifecycleScope.launch {
+                val selectedItem = parent.getItemAtPosition(position).toString()
+                storeCity(selectedItem)
+                binding.cityNextButton.isEnabled = true
+            }
+        }
+
+        binding.cityNextButton.isEnabled = false
     }
 
     /**
@@ -72,16 +82,24 @@ class CitySelect : AppCompatActivity() {
             }
 
             override fun onResponse(call: okhttp3.Call, response: okhttp3.Response) {
-                println("Response: ${response.body()?.string()}")
                 val jsonObject = JSONTokener(response.body()?.string()).nextValue() as JSONArray
-                println(jsonObject.getJSONObject(0).getString("name"))
+                val tmpCityList = ArrayList<String>()
+                for (i in 0 until jsonObject.length()) {
+                    val city = jsonObject.getJSONObject(i).getString("city")
+                    tmpCityList.add(city)
+                }
+                cityList.addAll(tmpCityList.distinct())
             }
         })
         }
 
-    data class MensaOnlyCity(
-      val city: String,
-    )
+    suspend fun storeCity(city: String) {
+        val key = stringPreferencesKey("city")
+        dataStore.edit { settings ->
+            settings[key] = city
+        }
+    }
+
 
     }
 
