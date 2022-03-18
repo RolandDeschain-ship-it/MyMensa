@@ -13,7 +13,7 @@ import android.widget.ArrayAdapter
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.example.mymensa.databinding.ActivityCitySelectBinding
-import okhttp3.OkHttpClient
+
 import org.json.JSONArray
 import org.json.JSONTokener
 import java.io.IOException
@@ -53,31 +53,10 @@ class CitySelect : AppCompatActivity() {
         val arrayAdapter = ArrayAdapter(this, R.layout.dropdown_item, testText)
         binding.autoCompleteTextView.setAdapter(arrayAdapter)
 
-        getCanteens()
 
     }
 
-    /**
-     * Get the json from the url https://openmensa.org/api/v2/canteens with OkHttp
-     */
-    fun getCanteens() {
-        val client = OkHttpClient()
-        val request = okhttp3.Request.Builder()
-            .url("https://openmensa.org/api/v2/canteens")
-            .build()
 
-        client.newCall(request).enqueue(object : okhttp3.Callback {
-            override fun onFailure(call: okhttp3.Call, e: IOException) {
-                println("Failed to execute request")
-            }
-
-            override fun onResponse(call: okhttp3.Call, response: okhttp3.Response) {
-                println("Response: ${response.body()?.string()}")
-                val jsonObject = JSONTokener(response.body()?.string()).nextValue() as JSONArray
-                println(jsonObject.getJSONObject(0).getString("name"))
-            }
-        })
-        }
 
     data class MensaOnlyCity(
       val city: String,
