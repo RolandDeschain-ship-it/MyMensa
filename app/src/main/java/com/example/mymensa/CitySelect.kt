@@ -13,7 +13,10 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.findNavController
+import androidx.navigation.ui.setupWithNavController
 import com.example.mymensa.databinding.ActivityCitySelectBinding
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.launch
 import okhttp3.OkHttpClient
 import org.json.JSONArray
@@ -52,52 +55,7 @@ class CitySelect : AppCompatActivity() {
 
         isFullscreen = true
 
-        getCanteens()
 
-        val arrayAdapter = ArrayAdapter(this, R.layout.dropdown_item, cityList)
-        binding.autoCompleteTextView.setAdapter(arrayAdapter)
-        binding.autoCompleteTextView.setOnItemClickListener { parent, _, position, _ ->
-            lifecycleScope.launch {
-                val selectedItem = parent.getItemAtPosition(position).toString()
-                storeCity(selectedItem)
-                binding.cityNextButton.isEnabled = true
-            }
-        }
-
-        binding.cityNextButton.isEnabled = false
-    }
-
-    /**
-     * Get the json from the url https://openmensa.org/api/v2/canteens with OkHttp
-     */
-    fun getCanteens() {
-        val client = OkHttpClient()
-        val request = okhttp3.Request.Builder()
-            .url("https://openmensa.org/api/v2/canteens")
-            .build()
-
-        client.newCall(request).enqueue(object : okhttp3.Callback {
-            override fun onFailure(call: okhttp3.Call, e: IOException) {
-                println("Failed to execute request")
-            }
-
-            override fun onResponse(call: okhttp3.Call, response: okhttp3.Response) {
-                val jsonObject = JSONTokener(response.body()?.string()).nextValue() as JSONArray
-                val tmpCityList = ArrayList<String>()
-                for (i in 0 until jsonObject.length()) {
-                    val city = jsonObject.getJSONObject(i).getString("city")
-                    tmpCityList.add(city)
-                }
-                cityList.addAll(tmpCityList.distinct())
-            }
-        })
-        }
-
-    suspend fun storeCity(city: String) {
-        val key = stringPreferencesKey("city")
-        dataStore.edit { settings ->
-            settings[key] = city
-        }
     }
 
 

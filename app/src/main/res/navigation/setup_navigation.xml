@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/setup_navigation"
+    app:startDestination="@id/citySelectFragment">
+    <fragment
+        android:id="@+id/citySelectFragment"
+        android:name="com.example.mymensa.CitySelectFragment"
+        android:label="fragment_city_select"
+        tools:layout="@layout/fragment_city_select" >
+        <action
+            android:id="@+id/action_citySelectFragment_to_mensaSelect"
+            app:destination="@id/mensaSelect" />
+    </fragment>
+    <fragment
+        android:id="@+id/mensaSelect"
+        android:name="com.example.mymensa.MensaSelect"
+        android:label="fragment_mensa_select"
+        tools:layout="@layout/fragment_mensa_select" >
+        <action
+            android:id="@+id/action_mensaSelect_to_dietSelect"
+            app:destination="@id/dietSelect" />
+    </fragment>
+    <fragment
+        android:id="@+id/dietSelect"
+        android:name="com.example.mymensa.DietSelect"
+        android:label="fragment_diet_select"
+        tools:layout="@layout/fragment_diet_select" />
+</navigation>

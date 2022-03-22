@@ -10,9 +10,13 @@
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="app/src/main/res/layout/dropdown_item.xml" value="0.22291666666666668" />
         <entry key="app/src/main/res/layout/food_item.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/fragment_city_select.xml" value="0.22291666666666668" />
         <entry key="app/src/main/res/layout/fragment_dashboard.xml" value="0.35208333333333336" />
+        <entry key="app/src/main/res/layout/fragment_diet_select.xml" value="0.22291666666666668" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.35208333333333336" />
+        <entry key="app/src/main/res/layout/fragment_mensa_select.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_notifications.xml" value="0.35208333333333336" />
+        <entry key="app/src/main/res/layout/mensa_chip_item.xml" value="0.25" />
         <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.35208333333333336" />
       </map>
     </option>
