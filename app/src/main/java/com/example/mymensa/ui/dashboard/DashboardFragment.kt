@@ -1,5 +1,6 @@
 package com.example.mymensa.ui.dashboard
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -7,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.example.mymensa.CitySelect
 import com.example.mymensa.databinding.FragmentDashboardBinding
 
 class DashboardFragment : Fragment() {
@@ -28,10 +30,12 @@ class DashboardFragment : Fragment() {
         _binding = FragmentDashboardBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val textView: TextView = binding.textDashboard
-        dashboardViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
+
+        binding.resetupButton.setOnClickListener{
+            val intent = Intent(this.context, CitySelect::class.java)
+            startActivity(intent)
         }
+
         return root
     }
 

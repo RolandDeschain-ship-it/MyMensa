@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">MyMensa</string>
     <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
+    <string name="title_dashboard">Settings</string>
     <string name="title_notifications">Notifications</string>
     <string name="title_activity_city_select">CitySelect</string>
     <string name="dummy_button">Dummy Button</string>
