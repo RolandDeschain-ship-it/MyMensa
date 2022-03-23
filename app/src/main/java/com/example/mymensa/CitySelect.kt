@@ -33,7 +33,6 @@ class CitySelect : AppCompatActivity() {
     private lateinit var fullscreenContent: TextView
     private lateinit var fullscreenContentControls: LinearLayout
     private var cityList: ArrayList<String> = ArrayList()
-    val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
 
     private var isFullscreen: Boolean = false
 

@@ -176,4 +176,27 @@ class DataStorageRepository(private val context: Context) {
         return list
     }
 
+    suspend fun isSetup(): Boolean {
+        val keyPreferenceMensa = stringPreferencesKey("mensen")
+        val keyPreferenceDiet = stringPreferencesKey("diets")
+        var setup = false
+        context.dataStore?.edit { settings ->
+            setup = settings.contains(keyPreferenceMensa)
+                    && settings.contains(keyPreferenceDiet)
+        }
+        println("Setup: $setup")
+        return setup
+    }
+
+    suspend fun clearAll(){
+        val keyPreferenceCity = stringPreferencesKey("city")
+        val keyPreferenceMensa = stringPreferencesKey("mensen")
+        val keyPreferenceDiet = stringPreferencesKey("diets")
+        context.dataStore?.edit { settings ->
+            settings.remove(keyPreferenceCity)
+            settings.remove(keyPreferenceMensa)
+            settings.remove(keyPreferenceDiet)
+        }
+    }
+
 }

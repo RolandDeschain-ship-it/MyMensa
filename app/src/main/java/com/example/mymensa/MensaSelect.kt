@@ -57,6 +57,10 @@ class MensaSelect : Fragment() {
 
         _binding = FragmentMensaSelectBinding.inflate(inflater, container, false)
 
+        lifecycleScope.launch{
+            dataStore.clearAll()
+        }
+
         linearLayoutManager = LinearLayoutManager(context)
         binding.mensaChipsView.layoutManager = linearLayoutManager
 
