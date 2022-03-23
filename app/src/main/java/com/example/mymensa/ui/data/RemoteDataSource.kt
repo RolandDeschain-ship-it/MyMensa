@@ -3,7 +3,6 @@ package com.example.mymensa.ui.data
 import android.icu.text.SimpleDateFormat
 import android.os.Build
 import androidx.annotation.RequiresApi
-import androidx.datastore.dataStore
 import com.example.mymensa.ui.home.FoodItem
 import com.example.mymensa.ui.home.Prices
 import kotlinx.coroutines.CoroutineScope
@@ -73,13 +72,21 @@ class RetrofitDataSource : RemoteDataSource, KoinComponent {
     override suspend fun getAllTodayFoodItems(): List<FoodItem> {
         var allTodayFoodItems: MutableList<List<FoodItem>> = mutableListOf<List<FoodItem>>()
         val mensaIDList = getMensaIDList()
-        return getTodayFoodItem(mensaIDList[0])
+        if(mensaIDList.size > 0) {
+            return getTodayFoodItem(mensaIDList[0])
+        }else{
+            return getTodayFoodItem(64)
+        }
     }
 
     override suspend fun getAllTomorrowFoodItems(): List<FoodItem> {
         var allTomorrowFoodItems: MutableList<List<FoodItem>> = mutableListOf<List<FoodItem>>()
         val mensaIDList = getMensaIDList()
+        if(mensaIDList.size > 0) {
         return getTomorrowFoodItem(mensaIDList[0])
+        }else{
+        return getTomorrowFoodItem(64)
+    }
     }
 
     @RequiresApi(Build.VERSION_CODES.N)
