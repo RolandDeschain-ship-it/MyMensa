@@ -1,7 +1,9 @@
 package com.example.mymensa
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.View
+import android.widget.Button
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
@@ -12,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mymensa.databinding.ActivityMainBinding
 import com.example.mymensa.ui.home.FoodItemAdapter
+import kotlinx.android.synthetic.main.fragment_home.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -20,9 +23,7 @@ class MainActivity : AppCompatActivity() {
     //private lateinit var testList: MutableList<FoodItem>
     //private lateinit var testFoodItem: FoodItem
 
-    fun sendMessage(view: View) {
-        // Do something in response to button
-    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,5 +43,9 @@ class MainActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
+
     }
+
+
 }

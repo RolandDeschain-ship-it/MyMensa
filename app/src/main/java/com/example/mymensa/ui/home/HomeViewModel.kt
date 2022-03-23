@@ -17,14 +17,17 @@ class HomeViewModel(
 ) : ViewModel() {
 
     //val mensaItems = MutableLiveData<List<Mensa>>(emptyList())
-    val foodItems = MutableLiveData<List<FoodItem>>(emptyList())
+    val todayFoodItems = MutableLiveData<List<FoodItem>>(listOf<FoodItem>())
+    val tomorrowFoodItems = MutableLiveData<List<FoodItem>>(listOf<FoodItem>())
 
     init {
         viewModelScope.launch {
             //val mensen = mensaRepository.getMensa()
             //mensaItems.value = mensen
-            val gerichte = foodItemRepository.getFoodItem()
-            foodItems.value = gerichte
+            val gerichteHeute = foodItemRepository.getTodayFoodItems()
+            todayFoodItems.value = gerichteHeute
+            val gerichteMorgen = foodItemRepository.getTomorrowFoodItems()
+            tomorrowFoodItems.value = gerichteMorgen
         }
     }
 }

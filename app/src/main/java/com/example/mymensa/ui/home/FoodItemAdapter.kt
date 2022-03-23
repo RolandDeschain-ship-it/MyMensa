@@ -22,8 +22,8 @@ class FoodItemAdapter : ListAdapter<FoodItem, FoodItemAdapter.FoodItemViewHolder
         val item = getItem(position)
         with(holder.binding) {
             fooditemHeadline.text = item.name.toString()
-            fooditemSubheading.text = item.category.toString()
-            price.text = item.prices.students.toString()
+            fooditemSubheading.text = item.category
+            priceView.text = item.prices.students.toString()
         }
 
 

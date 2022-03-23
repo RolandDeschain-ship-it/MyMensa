@@ -19,15 +19,12 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <Button
-            android:id="@+id/button1"
-            style="@style/Widget.AppCompat.Button"
+            android:id="@+id/heuteButton"
             android:layout_width="3dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@drawable/roundedcorners"
-            android:text="Heute"
-            android:alpha="0.7"
-            android:translationZ="90dp" />
+            android:stateListAnimator="@android:anim/accelerate_decelerate_interpolator"
+            android:text="Heute" />
 
         <Space
             android:layout_width="wrap_content"
@@ -37,14 +34,11 @@
             app:layout_constraintStart_toStartOf="parent" />
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/morgenButton"
             android:layout_width="3dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@drawable/roundedcorners"
-            android:text="Morgen"
-            android:alpha="0.7"
-            android:translationZ="90dp" />
+            android:text="Morgen" />
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView

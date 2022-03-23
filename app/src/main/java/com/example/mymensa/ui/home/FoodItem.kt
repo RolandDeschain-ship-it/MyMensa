@@ -15,11 +15,13 @@ data class FoodItem(
     val category: String,
     val name: String,
     val prices: Prices,
+    val notes: MutableList<String>
 
 
     )
+
 @JsonClass(generateAdapter = true)
 data class Prices(
-    val students:Double,
-
+    val students:Double
     )
+
