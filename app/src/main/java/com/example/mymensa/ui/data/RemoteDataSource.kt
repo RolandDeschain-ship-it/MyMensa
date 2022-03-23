@@ -121,7 +121,7 @@ class RetrofitDataSource : RemoteDataSource, KoinComponent {
         return date
     }
 
-    private fun foodItemfilter(toFilterList: List<FoodItem>): List<FoodItem> {
+    private suspend fun foodItemfilter(toFilterList: List<FoodItem>): List<FoodItem> {
         var filterCritList = getFilterCrit()
         var translatedCritList = translateCrit(filterCritList)
         var mutableFoodList: MutableList<FoodItem> = mutableListOf()
@@ -137,6 +137,11 @@ class RetrofitDataSource : RemoteDataSource, KoinComponent {
             mutableFoodList.removeAll {
                 it.notes.filter { note ->
                     note.lowercase().contains("vegetarisch")
+                }.isEmpty()
+            }
+            mutableFoodList.removeAll {
+                it.notes.filter { note ->
+                    note.lowercase().contains("fleischlos")
                 }.isEmpty()
             }
         }
@@ -195,10 +200,13 @@ class RetrofitDataSource : RemoteDataSource, KoinComponent {
     }
 
 
-    private fun getFilterCrit(): List<String> {
-        //TODO(getter Filterkriterien)
+    private suspend fun getFilterCrit(): List<String> {
 
-        return listOf("porkFree", "poultryFree")
+        var list:List<String> = dataStore.getStringArray("diets")
+        println("LOOOOOOOOOOL")
+        println(list)
+        return list
+
     }
 
 
@@ -215,14 +223,15 @@ class RetrofitDataSource : RemoteDataSource, KoinComponent {
         var translatedList: MutableList<String> = mutableListOf()
         for (crits in critList) {
             when (crits) {
-                "vegan" -> translatedList.add("vegan")
-                "vegetarien" -> translatedList.add("vegetarsich")
-                "glutenFree" -> translatedList.add("gluten")
-                "lactoseFree" -> translatedList.addAll(listOf("laktose", "milch"))
-                "porkFree" -> translatedList.add("schwein")
-                "beefFree" -> translatedList.add("rind")
-                "poultryFree" -> translatedList.add("geflügel")
-                "alcoholFree" -> translatedList.add("alkohol")
+                "Vegan" -> translatedList.add("vegan")
+                "Vegetarisch" -> translatedList.add("vegetarsich")
+                "Vegetarisch" -> translatedList.add("fleischlos")
+                "Glutenfrei" -> translatedList.add("gluten")
+                "Laktosefrei" -> translatedList.addAll(listOf("laktose", "milch"))
+                "Ohne Schweinefleisch" -> translatedList.add("schwein")
+                "Ohne Rindfleisch" -> translatedList.add("rind")
+                "Ohne Geflügel" -> translatedList.add("geflügel")
+                "Alkoholfrei" -> translatedList.add("alkohol")
 
             }
         }
